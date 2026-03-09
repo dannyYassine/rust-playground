@@ -1,0 +1,43 @@
+use askama::Template;
+
+#[derive(Template)]
+#[template(
+    source = r#"
+    <div class="chart-card">
+        <div class="chart-label">{{ label }}</div>
+        <div class="chart-value">{{ value }}</div>
+        <div class="chart-area">
+            <svg viewBox="0 0 200 90" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="\#4f46e5" stop-opacity="0.18" />
+                        <stop offset="100%" stop-color="\#4f46e5" stop-opacity="0" />
+                    </linearGradient>
+                </defs>
+                <path
+                    d="M0 80 L30 70 L60 75 L90 55 L120 45 L160 20 L200 10"
+                    fill="none"
+                    stroke="\#4f46e5"
+                    stroke-width="2.5"
+                    stroke-linejoin="round"
+                    stroke-linecap="round"
+                />
+                <path
+                    d="M0 80 L30 70 L60 75 L90 55 L120 45 L160 20 L200 10 L200 90 L0 90 Z"
+                    fill="url(#chartGrad)"
+                />
+            </svg>
+        </div>
+        <div class="chart-legend">
+            <span class="legend-dot"></span>
+            {{ year }}
+        </div>
+    </div>
+"#,
+    ext = "html"
+)]
+pub struct ChartCardTemplate {
+    pub label: String,
+    pub value: String,
+    pub year: String,
+}

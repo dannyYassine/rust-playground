@@ -1,0 +1,49 @@
+<div id="flash-message" hx-swap-oob="true">
+    {% if let Some(msg) = error %}
+    <div class="flash flash-error">
+        <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+        >
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+        </svg>
+        {{ msg }}
+    </div>
+    {% endif %} {% if let Some(msg) = success %}
+    <div class="flash flash-success">
+        <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+        >
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="9 12 11 14 15 10" />
+        </svg>
+        {{ msg }}
+    </div>
+    {% endif %}
+
+    <script>
+        setTimeout(() => {
+            const flash = document.querySelector(".flash-error");
+            if (flash) {
+                flash.remove();
+            }
+        }, 3000);
+    </script>
+</div>

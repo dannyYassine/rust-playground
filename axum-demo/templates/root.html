@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Axum Demo</title>
+        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
+        <script src="https://unpkg.com/htmx.org@1.9.10/dist/ext/json-enc.js"></script>
+        <script src="//unpkg.com/alpinejs" defer></script>
+
+        <style>
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    Oxygen, Ubuntu, Cantarell, sans-serif;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 2rem;
+                background-color: #f5f5f5;
+            }
+            .container {
+                background-color: white;
+                padding: 2rem;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            h1 {
+                color: #333;
+                margin-top: 0;
+            }
+            .endpoints {
+                margin-top: 2rem;
+            }
+            .endpoint {
+                background-color: #f8f9fa;
+                padding: 1rem;
+                margin: 1rem 0;
+                border-radius: 4px;
+                border-left: 4px solid #007bff;
+            }
+            .method {
+                display: inline-block;
+                padding: 0.25rem 0.5rem;
+                border-radius: 3px;
+                font-weight: bold;
+                font-size: 0.875rem;
+                margin-right: 0.5rem;
+            }
+            .get {
+                background-color: #61affe;
+                color: white;
+            }
+            .post {
+                background-color: #49cc90;
+                color: white;
+            }
+            code {
+                background-color: #e9ecef;
+                padding: 0.2rem 0.4rem;
+                border-radius: 3px;
+                font-family: "Courier New", monospace;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>🦀 Axum Demo API</h1>
+            <p>Welcome to the Axum web server demo!</p>
+
+            {{ name }}
+
+            <div>
+                <h2>Total requests:</h2>
+                {{ count }}
+            </div>
+
+            <div class="endpoints">
+                <h2>Available Endpoints:</h2>
+
+                <div class="endpoint">
+                    <span class="method get">GET</span>
+                    <code>/</code>
+                    <p>Returns this page</p>
+                </div>
+
+                <div class="endpoint">
+                    <span class="method get">GET</span>
+                    <code>/user?name=Danny</code>
+                    <p>
+                        Get a user by name. Returns the user object or null if
+                        not found.
+                    </p>
+                    <div>
+                        <form
+                            hx-get="/htmx/user"
+                            hx-swap="beforeend"
+                            hx-target="#user"
+                        >
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="Enter name..."
+                            />
+                            <button type="submit">Add user</button>
+                        </form>
+
+                        <div id="user"></div>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <span class="method post">POST</span>
+                    <code>/user</code>
+                    <p>
+                        Create a new user. Send JSON body with
+                        <code>name</code> and <code>email</code>.
+                    </p>
+                    <pre
+                        style="
+                            margin-top: 0.5rem;
+                            background-color: #fff;
+                            padding: 0.5rem;
+                            border-radius: 3px;
+                        "
+                    >
+{
+  "name": "John Doe",
+  "email": "john@example.com"
+}</pre
+                    >
+                    <div>
+                        <form
+                            hx-post="/htmx/user"
+                            hx-ext="json-enc"
+                            hx-swap="outerHTML"
+                            hx-target="[data-id='user-post']"
+                        >
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="Enter name..."
+                            />
+                            <input
+                                type="text"
+                                name="email"
+                                placeholder="Enter email..."
+                            />
+                            <button type="submit">Add user</button>
+                        </form>
+
+                        <div data-id="user-post" hx-swap-oob="true"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

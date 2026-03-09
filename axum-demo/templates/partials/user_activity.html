@@ -1,0 +1,26 @@
+<div class="activity-card">
+    <div class="activity-header">
+        <span class="activity-title">User activity</span>
+        <span class="activity-dots">···</span>
+    </div>
+    <div class="activity-stats">
+        <div class="activity-stat">
+            <div class="pct">
+                <span class="dot dot-blue"></span>{{ active_pct }}%
+            </div>
+            <div class="pct-label">Active users</div>
+        </div>
+        <div class="activity-stat">
+            <div class="pct">
+                <span class="dot dot-red"></span>{{ inactive_pct }}%
+            </div>
+            <div class="pct-label">Inactive users</div>
+        </div>
+    </div>
+    <div class="progress-track blue-track">
+        <div class="progress-fill fill-blue" style="width: {{ active_pct }}%"></div>
+    </div>
+    <div class="progress-track red-track">
+        <div class="progress-fill fill-red" style="width: {{ inactive_pct }}%"></div>
+    </div>
+</div>

@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Sign in</title>
+        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
+        <script src="https://unpkg.com/htmx.org@1.9.10/dist/ext/json-enc.js"></script>
+        <script src="//unpkg.com/alpinejs" defer></script>
+        <style>
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    Helvetica, Arial, sans-serif;
+                background-color: #fff;
+                color: #111;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .card {
+                width: 100%;
+                max-width: 480px;
+                padding: 2rem 2.5rem;
+            }
+
+            .heading {
+                font-size: 2rem;
+                font-weight: 800;
+                letter-spacing: -0.5px;
+                margin-bottom: 0.5rem;
+            }
+
+            .subheading {
+                font-size: 0.95rem;
+                color: #6b7280;
+                margin-bottom: 2.5rem;
+            }
+
+            .form-group {
+                margin-bottom: 1.25rem;
+            }
+
+            .form-group-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 0.4rem;
+            }
+
+            label {
+                font-size: 0.9rem;
+                font-weight: 600;
+                color: #111;
+                display: block;
+                margin-bottom: 0.4rem;
+            }
+
+            .forgot-link {
+                font-size: 0.85rem;
+                color: #6b7280;
+                text-decoration: none;
+            }
+
+            .forgot-link:hover {
+                color: #111;
+            }
+
+            input[type="email"],
+            input[type="password"] {
+                width: 100%;
+                padding: 0.75rem 1rem;
+                border: 1px solid #d1d5db;
+                border-radius: 8px;
+                font-size: 0.95rem;
+                color: #111;
+                background: #fff;
+                outline: none;
+                transition: border-color 0.15s;
+            }
+
+            input[type="email"]::placeholder,
+            input[type="password"]::placeholder {
+                color: #9ca3af;
+            }
+
+            input[type="email"]:focus,
+            input[type="password"]:focus {
+                border-color: #6b7280;
+            }
+
+            .checkbox-row {
+                display: flex;
+                align-items: center;
+                gap: 0.6rem;
+                margin-bottom: 1.25rem;
+            }
+
+            .checkbox-row input[type="checkbox"] {
+                width: 16px;
+                height: 16px;
+                accent-color: #111;
+                cursor: pointer;
+                flex-shrink: 0;
+            }
+
+            .checkbox-row label {
+                font-size: 0.9rem;
+                font-weight: 400;
+                color: #374151;
+                margin-bottom: 0;
+                cursor: pointer;
+            }
+
+            .btn-signin {
+                width: 100%;
+                padding: 0.85rem;
+                background-color: #111827;
+                color: #fff;
+                border: none;
+                border-radius: 8px;
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition:
+                    background-color 0.15s,
+                    opacity 0.15s;
+                margin-bottom: 1.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+
+            .btn-signin:hover {
+                background-color: #1f2937;
+            }
+
+            .btn-signin:disabled {
+                opacity: 0.7;
+                cursor: not-allowed;
+            }
+
+            .btn-signin .btn-text {
+            }
+
+            .btn-signin .btn-loading {
+                display: none;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .htmx-request .btn-signin .btn-text {
+                display: none;
+            }
+
+            .htmx-request .btn-signin .btn-loading {
+                display: flex;
+            }
+
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .spinner {
+                width: 16px;
+                height: 16px;
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                border-top-color: #fff;
+                border-radius: 50%;
+                animation: spin 0.6s linear infinite;
+            }
+
+            .divider {
+                text-align: center;
+                font-size: 0.8rem;
+                color: #9ca3af;
+                letter-spacing: 0.08em;
+                margin-bottom: 1.25rem;
+                text-transform: uppercase;
+            }
+
+            .social-buttons {
+                display: flex;
+                gap: 0.75rem;
+                margin-bottom: 2rem;
+            }
+
+            .btn-social {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.6rem;
+                padding: 0.7rem 1rem;
+                border: 1px solid #d1d5db;
+                border-radius: 8px;
+                background: #fff;
+                font-size: 0.9rem;
+                font-weight: 600;
+                color: #111;
+                cursor: pointer;
+                text-decoration: none;
+                transition:
+                    background-color 0.15s,
+                    border-color 0.15s;
+            }
+
+            .btn-social:hover {
+                background-color: #f9fafb;
+                border-color: #9ca3af;
+            }
+
+            .btn-social svg {
+                flex-shrink: 0;
+            }
+
+            .signup-row {
+                font-size: 0.9rem;
+                color: #6b7280;
+            }
+
+            .signup-row a {
+                color: #3b82f6;
+                text-decoration: none;
+                font-weight: 500;
+            }
+
+            .signup-row a:hover {
+                text-decoration: underline;
+            }
+
+            .flash {
+                display: flex;
+                align-items: center;
+                gap: 0.6rem;
+                padding: 0.75rem 1rem;
+                border-radius: 8px;
+                font-size: 0.9rem;
+                font-weight: 500;
+                margin-bottom: 1.25rem;
+            }
+
+            .flash-error {
+                background-color: #fef2f2;
+                color: #b91c1c;
+                border: 1px solid #fecaca;
+            }
+
+            .flash-success {
+                background-color: #f0fdf4;
+                color: #15803d;
+                border: 1px solid #bbf7d0;
+            }
+
+            .flash svg {
+                flex-shrink: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="card">
+            <h1 class="heading">Sign in</h1>
+            <p class="subheading">Welcome back! Enter your details below.</p>
+
+            <div id="flash-message"></div>
+
+            <div id="counter"></div>
+
+            {{ LoginForm::new() |safe }}
+
+            <div class="divider">or</div>
+
+            {{ LoginFormFooter::new() |safe }}
+        </div>
+    </body>
+</html>

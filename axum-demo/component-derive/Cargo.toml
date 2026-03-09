@@ -1,0 +1,14 @@
+[package]
+name = "component-derive"
+version = "0.1.0"
+edition = "2021"
+description = "Proc macro for the component crate"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = { version = "2", features = ["full"] }
+quote = "1"
+proc-macro2 = "1"
+darling = "0.20"

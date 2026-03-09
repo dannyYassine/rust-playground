@@ -1,0 +1,12 @@
+[package]
+name = "component"
+version = "0.1.0"
+edition = "2021"
+description = "Component system for Askama + Axum"
+
+[dependencies]
+# Re-exports #[derive(Component)]
+component-derive = { path = "../component-derive" }
+
+# Needed for the filter return type
+askama = "0.15.4"

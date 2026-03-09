@@ -1,0 +1,47 @@
+<div class="orders-card">
+    <div class="orders-header">
+        <span class="orders-title">Recent Order</span>
+        <button class="btn-see-more">See More</button>
+    </div>
+    <table class="orders-table">
+        <thead>
+            <tr>
+                <th>Order Name <span class="sort-arrow">▼</span></th>
+                <th>Date <span class="sort-arrow">▼</span></th>
+                <th>Status <span class="sort-arrow">▼</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>
+                    <div class="order-name-cell">
+                        <div class="order-thumb" style="background: {{ order.color }}">
+                            <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                            >
+                                <rect x="5" y="2" width="14" height="20" rx="2" />
+                                <line x1="9" y1="7" x2="15" y2="7" />
+                                <line x1="9" y1="11" x2="15" y2="11" />
+                            </svg>
+                        </div>
+                        {{ order.name }}
+                    </div>
+                </td>
+                <td>{{ order.date }}</td>
+                <td>
+                    <span class="badge-status {{ order.status_class() }}">
+                        {{ order.status_label() }}
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

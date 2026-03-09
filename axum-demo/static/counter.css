@@ -1,0 +1,8 @@
+#counter {
+    color: red;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+#counter:hover {
+    transform: scale(1.1);
+    color: #D0021B;
+}
